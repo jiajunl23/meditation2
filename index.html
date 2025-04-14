@@ -2,8 +2,11 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <body></body>
 <script>
+
 /* global nn */
-let selected_emoji = 0
+let selected_emoji = "random"
+let mode = "brush"
+const fruits = ["🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍"]
 const grape = nn.create("span").content("🍇").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
   .on("click", () => selected_emoji = "🍇")
 const melon = nn.create("span").content("🍈").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
@@ -19,17 +22,21 @@ const banana = nn.create("span").content("🍌").css({fontSize: "50px", cursor: 
 const pinapple = nn.create("span").content("🍍").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
   .on("click", () => selected_emoji = "🍍")
 nn.create("span").content("?").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
-  .on("click", () => selected_emoji = 0)
-nn.create("span").content("Choose Your Brush By Clicking").css({fontSize: "20px", cursor: "pointer"}).addTo("body")
-const fruits = ["🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍"]
+  .on("click", () => selected_emoji = "random")
+nn.create("span").content("🖌️").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => mode = "brush")
+nn.create("span").content("🪣").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => mode = "splash")
+nn.create("span").content("Choose Emoji and Mode By Clicking").css({fontSize: "20px", cursor: "pointer"}).addTo("body")
 
+let lowerbound = Math.ceil((fruits.length + 2) * 50 / window.innerWidth) * 60
 
 function draw () {
   requestAnimationFrame(draw)
   
-  if (nn.mouseDown && nn.mouseY > 100) {
-    if (selected_emoji === 0) {
-      const object = nn.create("span")
+  if (nn.mouseDown && nn.mouseY > lowerbound) {
+    if (selected_emoji === "random") {
+      const emoji = nn.create("span")
                     .content(nn.random(fruits))
                     .css({
                       fontSize: "20px",
@@ -38,8 +45,20 @@ function draw () {
                       top: nn.mouseY
                     })
                     .addTo("body")
+      if (mode === "splash") {
+        for (let i = 0; i < 8; i++) {
+                  nn.create("span")
+                    .content(nn.random(fruits))
+                    .css({
+                      fontSize: "10px",
+                      position: "absolute",
+                      left: nn.random(nn.mouseX - 30, nn.mouseX + 30),
+                      top: nn.random(nn.mouseY - 30, nn.mouseY + 30)
+                    }).addTo("body")
+        }
+      } 
     } else {
-    const object = nn.create("span")
+    const emoji = nn.create("span")
                     .content(selected_emoji)
                     .css({
                       fontSize: "20px",
@@ -48,9 +67,19 @@ function draw () {
                       top: nn.mouseY
                     })
                     .addTo("body")
+    if (mode === "splash") {
+        for (let i = 0; i < 8; i++) {
+                  nn.create("span")
+                    .content(selected_emoji)
+                    .css({
+                      fontSize: "10px",
+                      position: "absolute",
+                      left: nn.random(nn.mouseX - 30, nn.mouseX + 30),
+                      top: nn.random(nn.mouseY - 30, nn.mouseY + 30)
+                    }).addTo("body")
+        }
+      } 
     }
-    // console.log(nn.mouseX)
-    // console.log(nn.mouseY)
   }
 }
 
