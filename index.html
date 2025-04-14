@@ -28,24 +28,17 @@ nn.create("span").content("🖌️").css({fontSize: "50px", cursor: "pointer"}).
   .on("click", () => mode = "brush")
 nn.create("span").content("🪣").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
   .on("click", () => mode = "splash")
-nn.create("span").content("🌊").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
-  .on("click", () => mode = "wave")
 nn.create("span").content("Choose Emoji | Mode by Clicking").css({fontSize: "20px", cursor: "pointer"}).addTo("body")
 
 let lowerbound = Math.ceil((fruits.length + 3) * 50 / window.innerWidth) * 60
-
-// function curve (x0, y0) {
-//   let x1 = Math.round(nn.random(x0 - 200, x0))
-//   let y1 = Math.round(- 0.007 * ((x0 - x1) * (x0 - x1)) + y0)
-//   return [x1, y1]
-// }
 
 function draw () {
   requestAnimationFrame(draw)
   
   if (nn.mouseDown && nn.mouseY > lowerbound) {
     if (selected_emoji === "random") {
-      nn.create("span")
+      if (mode === "brush") {
+        nn.create("span")
         .content(nn.random(fruits))
         .css({
               fontSize: "20px",
@@ -54,70 +47,38 @@ function draw () {
               top: nn.mouseY
           })
         .addTo("body")
+      }
       if (mode === "splash") {
         for (let i = 0; i < 8; i++) {
           nn.create("span")
             .content(nn.random(fruits))
             .css({
-                  fontSize: "10px",
+                  fontSize: "15px",
                   position: "absolute",
                   left: nn.random(nn.mouseX - 30, nn.mouseX + 30),
                   top: nn.random(nn.mouseY - 30, nn.mouseY + 30)
               })
             .addTo("body")
         }
-      }
-      // if (mode === "wave") {
-      //   for (let i = 0; i < 1; i++) {
-      //     nn.create("span")
-      //       .content(nn.random(fruits))
-      //       .css({
-      //             fontSize: "10px",
-      //             position: "absolute",
-      //             left: curve(nn.mouseX, nn.mouseY)[0],
-      //             top: curve(nn.mouseX, nn.mouseY)[1]
-      //         })
-      //       .addTo("body")
-      //   }
-        // for (let i = 0; i < 16; i++) {
-        //   nn.create("span")
-        //     .content(nn.random(fruits))
-        //     .css({
-        //           fontSize: "10px",
-        //           position: "absolute",
-        //           left: nn.random(nn.mouseX - 30, nn.mouseX - 15),
-        //           top: nn.random(nn.mouseY - 30, nn.mouseY)
-        //       })
-        //     .addTo("body")
-        // }
-        // for (let i = 0; i < 8; i++) {
-        //   nn.create("span")
-        //     .content(nn.random(fruits))
-        //     .css({
-        //           fontSize: "10px",
-        //           position: "absolute",
-        //           left: nn.random(nn.mouseX - 20, nn.mouseX - 10),
-        //           top: nn.random(nn.mouseY - 30, nn.mouseY - 20)
-        //       })
-        //     .addTo("body")
-        // }
-      // } 
+      } 
     } else {
-    nn.create("span")
-      .content(selected_emoji)
-      .css({
-            fontSize: "20px",
-            position: "absolute",
-            left: nn.mouseX,
-            top: nn.mouseY
-          })
-      .addTo("body")
+      if (mode === "brush") {
+        nn.create("span")
+          .content(selected_emoji)
+          .css({
+                fontSize: "20px",
+                position: "absolute",
+                left: nn.mouseX,
+                top: nn.mouseY
+              })
+          .addTo("body")
+      }
     if (mode === "splash") {
         for (let i = 0; i < 8; i++) {
           nn.create("span")
             .content(selected_emoji)
             .css({
-                  fontSize: "10px",
+                  fontSize: "15px",
                   position: "absolute",
                   left: nn.random(nn.mouseX - 30, nn.mouseX + 30),
                   top: nn.random(nn.mouseY - 30, nn.mouseY + 30)
