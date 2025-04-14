@@ -3,27 +3,29 @@
 <body></body>
 <script>
 /* global nn */
-  
 let selected_emoji = "🍇"
-const grape = nn.create("span").content("🍇").css({fontSize: "50px"}).addTo("body")
-const melon = nn.create("span").content("🍈").css({fontSize: "50px"}).addTo("body")
-const w_melon = nn.create("span").content("🍉").css({fontSize: "50px"}).on("click", () => w_melon.remove()).addTo("body")
-const orange = nn.create("span").content("🍊").css({fontSize: "50px"}).addTo("body")
-const lemon = nn.create("span").content("🍋").css({fontSize: "50px"}).addTo("body")
-const lime = nn.create("span").content("🍋‍🟩").css({fontSize: "50px"}).addTo("body")
+const grape = nn.create("span").content("🍇").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => selected_emoji = "🍇")
+const melon = nn.create("span").content("🍈").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => selected_emoji = "🍈")
+const w_melon = nn.create("span").content("🍉").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
   .on("click", () => selected_emoji = "🍉")
-const banana = nn.create("span").content("🍌").css({fontSize: "50px"}).addTo("body")
-  .on("click", () => selected_emoji = "🍉")
-const pinapple = nn.create("span").content("🍍").css({fontSize: "50px"}).addTo("body")
-  .on("click", () => selected_emoji = "🍉")
-nn.create("span").content("Choose Your Brush By Clicking").css({fontSize: "30px"}).addTo("body")
+const orange = nn.create("span").content("🍊").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => selected_emoji = "🍊")
+const lemon = nn.create("span").content("🍋").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => selected_emoji = "🍋")
+const banana = nn.create("span").content("🍌").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => selected_emoji = "🍌")
+const pinapple = nn.create("span").content("🍍").css({fontSize: "50px", cursor: "pointer"}).addTo("body")
+  .on("click", () => selected_emoji = "🍍")
+nn.create("span").content("Choose Your Brush By Clicking").css({fontSize: "20px", cursor: "pointer"}).addTo("body")
   
 
 
 function draw () {
   requestAnimationFrame(draw)
   
-  if (nn.mouseDown) {
+  if (nn.mouseDown && nn.mouseY > 100) {
     const object = nn.create("span")
                     .content(selected_emoji)
                     .css({
@@ -33,6 +35,8 @@ function draw () {
                       top: nn.mouseY
                     })
                     .addTo("body")
+    // console.log(nn.mouseX)
+    // console.log(nn.mouseY)
   }
 }
 
