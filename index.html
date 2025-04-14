@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://generativeart.online/css/drawing-app.css">
+<script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+<body></body>
+<script>
+/* global nn */
+  
+let selected_emoji = "🍇"
+const grape = nn.create("span").content("🍇").css({fontSize: "50px"}).addTo("body")
+const melon = nn.create("span").content("🍈").css({fontSize: "50px"}).addTo("body")
+const w_melon = nn.create("span").content("🍉").css({fontSize: "50px"}).on("click", () => w_melon.remove()).addTo("body")
+const orange = nn.create("span").content("🍊").css({fontSize: "50px"}).addTo("body")
+const lemon = nn.create("span").content("🍋").css({fontSize: "50px"}).addTo("body")
+const lime = nn.create("span").content("🍋‍🟩").css({fontSize: "50px"}).addTo("body")
+  .on("click", () => selected_emoji = "🍉")
+const banana = nn.create("span").content("🍌").css({fontSize: "50px"}).addTo("body")
+  .on("click", () => selected_emoji = "🍉")
+const pinapple = nn.create("span").content("🍍").css({fontSize: "50px"}).addTo("body")
+  .on("click", () => selected_emoji = "🍉")
+nn.create("span").content("Choose Your Brush By Clicking").css({fontSize: "30px"}).addTo("body")
+  
+
+
+function draw () {
+  requestAnimationFrame(draw)
+  
+  if (nn.mouseDown) {
+    const object = nn.create("span")
+                    .content(selected_emoji)
+                    .css({
+                      fontSize: "20px",
+                      position: "absolute",
+                      left: nn.mouseX,
+                      top: nn.mouseY
+                    })
+                    .addTo("body")
+  }
+}
+
+draw()
+
+</script>
